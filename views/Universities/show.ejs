@@ -1,0 +1,82 @@
+<% layout('layouts/boilerplate')%>
+    <h1><%= University.title%></h1>
+    <h2><%= University.location%></h2>
+    <img src="<%= University.image%>" alt="">
+    <p>Description: <%= University.description %></p>
+    
+    <div class="container my-3">
+        <div class="row">
+          <div class="col">
+            <h3>Number Of Students: <%= University.numberStudents %></h3>
+          </div>
+          <div class="col">
+            <h3>Students Staff Ratio: <%= University.studentsStaffRatio%></h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h3>Percentage International Students: <%= University.percIntlStudents%></h3>
+          </div>
+          <div class="col">
+            <h3>Gender Ratio: <%= University.genderRatio%></h3>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              <h3>Overall Score: <%= University.overallScore%></h3>
+            </div>
+            <div class="col">
+              <h3>Teaching Score: <%= University.teachingScore%></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              <h3>Research Score: <%= University.researchScore%></h3>
+            </div>
+            <div class="col">
+              <h3> citations Score: <%= University.citationsScore%></h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              <h3> Industry Income Score: <%= University.industryIncomeScore%></h3>
+            </div>
+            <div class="col">
+              <h3> International Students Outlook Score: <%= University.intlOutlookScore%></h3>
+            </div>
+        </div>
+
+    <p>
+        <a href="/Universities/<%=University._id%>/edit" type="button" class="btn btn-dark">Edit</a>
+        <form action="/Universities/<%=University._id%>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Delete</button>
+        </form>
+    </p>
+     <p>
+     <a href="/Universities" type="button" class="btn btn-primary">All Universities</a>
+    </p>
+
+    <h2>Leave a Review</h2>
+    <form action="/Universities/<%=University._id%>/reviews" method="POST">
+        <div class="mb-3">
+            <label for="customRange2" class="form-label">Rating</label>
+            <input type="range" class="form-range" min="0" max="5" name="review[rating]" id="rating">
+        </div>
+        <div class="mb-3">
+            <label for="body" class="form-label">Review</label>
+                <textarea class="form-control" name="review[body]" id="body" cols="10" rows="5" required></textarea>
+        </div>
+        <button class="btn btn-success mb-3">Submit</button>
+    </form>
+    <% for(let review of University.reviews) { %>
+      <div class="card"></div>
+        <div class="card-body">
+          <p>Review: <%= review.body %></p>
+          <p>Rating: <%= review.rating %></p>
+
+          <form action="/Universities/<%= University._id %>/reviews/<%= review._id %>?_method=Delete" method="POST">
+            <button class="btn btn-sm btn-danger">Delete This Review</button>
+          </form>
+        </div>
+    <% } %>
+</div>

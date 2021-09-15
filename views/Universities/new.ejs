@@ -1,0 +1,29 @@
+<% layout('layouts/boilerplate')%>
+<div class="row">
+    <h1 class="text-center">New University</h1>
+    <div class="col-6 offset-3">
+        <form action="/Universities" method="POST">
+            <div class="mb-3" >
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="tile" name="University[title]" required>
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" name="University[location]" required>
+            </div>
+            <div class="mb-3">
+                <label for="url" class="form-label">University's Official website</label>
+                <input type="text" class="form-control" id="url" name="University[url]" placeholder="url(optional)">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea type="text" class="form-control" id="description" name="University[discription]" placeholder="description(optional)"></textarea>
+            </div>
+            <div class="mb-3">
+            <button class="btn btn-dark">Add University</button>
+            </div>
+        </form>
+        <a href="/Universities">All Universities</a>
+    </div>
+</div>
+  

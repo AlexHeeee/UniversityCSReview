@@ -1,0 +1,26 @@
+<% layout('layouts/boilerplate')%>
+    <h1>All Universities</h1>
+    <div class="my-3">
+        <a href="/Universities/new" type="button" class="btn btn-dark btn-lg">Add Universities</a>
+    </div>
+    <ul>
+        <% for (let University of Universities){%>
+            <div class="card mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="img-fluid" alt="" src="<%=University.image%>">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"> <%= University.title %></h5>
+                            <p class="card-text"> Description: <%= University.description %></p>
+                            <p class="card-text">
+                                <small class="text-muted"><%= University.location %></small>
+                            </p>
+                            <a class="btn btn-dark" href="Universities/<%= University._id %>">View <%= University.title %></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }%>
+    </ul> 
