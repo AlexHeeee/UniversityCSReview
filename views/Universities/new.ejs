@@ -2,7 +2,7 @@
 <div class="row">
     <h1 class="text-center">New University</h1>
     <div class="col-6 offset-3">
-        <form action="/Universities" method="POST">
+        <form action="/Universities" method="POST" enctype="multipart/form-data">
             <div class="mb-3" >
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" id="tile" name="University[title]" required>
@@ -19,6 +19,7 @@
                 <label for="description" class="form-label">Description</label>
                 <textarea type="text" class="form-control" id="description" name="University[discription]" placeholder="description(optional)"></textarea>
             </div>
+            <input type="file" name="image" id="" multiple>
             <div class="mb-3">
             <button class="btn btn-dark">Add University</button>
             </div>

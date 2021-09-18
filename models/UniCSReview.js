@@ -16,13 +16,20 @@ const UniCSReviewSchema = new Schema({
     industryIncomeScore:String,
     intlOutlookScore:String,
     description:String,
-    image:String,
+    images: [{
+        url: String,
+        filename: String
+    }],
     reviews: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Review'
         }
-    ]
+    ],
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
 });
 
 UniCSReviewSchema.post('findOneAndDelete', async function (doc){

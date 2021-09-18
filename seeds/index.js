@@ -17,9 +17,13 @@ const seedDB = async() => {
     for(let i = 0; i < 100; i++){
         //const random1000 = Math.floor(Math.random() *1000);
         const Uni = new UniCSReview({
+            author: '6141e5b19591f75e07c45bcd',
             title: `${universities[i].title}`,
             location: `${universities[i].location}`,
-            image: 'https://source.unsplash.com/collection/598450',
+            images: [ { "url" : "https://res.cloudinary.com/doqwnmsv5/image/upload/v1631860962/University/ontere2ge9mkgt8arisx.jpg", "filename" : "University/ontere2ge9mkgt8arisx"},
+             { "url" : "https://res.cloudinary.com/doqwnmsv5/image/upload/v1631860962/University/pfhaq8i7gzmhyffgrmtt.jpg", "filename" : "University/pfhaq8i7gzmhyffgrmtt"},
+             { "url" : "https://res.cloudinary.com/doqwnmsv5/image/upload/v1631860962/University/zbuh2v7nmldgwktqjtcb.jpg", "filename" : "University/zbuh2v7nmldgwktqjtcb"} ],
+            //'https://source.unsplash.com/collection/598450',
             description: `${universities[i].description}`,
             numberStudents: `${universities[i].numberStudents}`,
             studentsStaffRatio: `${universities[i].studentsStaffRatio}`,

@@ -4,12 +4,18 @@ const methodOverride = require('method-override');
 const engine = require('ejs-mate')
 const Review = require('../models/review');
 const UniCSReview = require('../models/UniCSReview');
-const {isLoggedIn} = require('../middleware');
+const {isLoggedIn, isReviewAuthor} = require('../middleware');
 
 
-router.post('/', isLoggedIn, async (req, res) => {
+router.post('/', async (req, res) => {
     const university = await UniCSReview.findById(req.params.id)
+    if (!req.isAuthenticated()){
+        req.session.returnTo = `/universities/${university._id}`;
+        req.flash('error', 'you must be signed in first!');
+        return res.redirect('/login');
+    }
     const review = new Review(req.body.review)
+    review.author = req.user._id;
     university.reviews.push(review);
     await review.save();
     await university.save();
@@ -17,7 +23,7 @@ router.post('/', isLoggedIn, async (req, res) => {
     res.redirect(`/universities/${university._id}`);
 })
 
-router.delete('/:reviewId',  isLoggedIn, async (req, res) => {
+router.delete('/:reviewId',  isLoggedIn, isReviewAuthor,  async (req, res) => {
     const {id, reviewId} = req.params;
     await UniCSReview.findByIdAndUpdate(id, {$pull: { reviews: reviewId}});
     await Review.findByIdAndDelete(reviewId);

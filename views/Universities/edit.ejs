@@ -1,7 +1,8 @@
 <% layout('layouts/boilerplate')%>
 <h1 class="text-center">Edit University</h1>
     <div class="form-group mb-3">
-        <form action="/Universities/<%=University._id%>?_method=PUT" method="POST">
+        <form action="/Universities/<%=University._id%>?_method=PUT" method="POST"
+            enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="title">Title</label>
                 <input type="text" class="form-control" id="tile" name="University[title]" value="<%=University.title %>">
@@ -10,7 +11,20 @@
                 <label for="location">Location</label>
                 <input type="text" id="location" class="form-control" name="University[location]" value="<%=University.location %>">
             </div>
+            <div class="mb-3">
+                <label for="image">Add Images</label>
+                <input type="file" name="image" id="image" multiple>
+            </div>
+            <div class="mb-3">
+                <% University.images.forEach((img, i) => { %>
+                    <img src="<%= img.url %> " class="img-thumbnail" alt="">
+                    <div class="form-check-inline">
+                        <input type="checkbox" id="image-<%= i %>" name="deleteImages[]" value="<%= img.filename %>">
+                    </div>
+                    <label for="image-<%= i %>">Delete</label>
+                <% }) %>
+            </div>
             <button class="btn btn-dark">Update University</button>
         </form>
     </div>
-        <a href="/Universities/<%= University._id%>">Back to University</a>
+    <a href="/Universities/<%= University._id%>">Back to University</a>

@@ -1,3 +1,8 @@
+//configuring cloudinary
+if(process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -6,16 +11,20 @@ const flash = require('connect-flash');
 const engine = require('ejs-mate')
 const UniCSReview = require('./models/UniCSReview');
 const Review = require('./models/review');
+
 const session = require('express-session');
+const MongoDbStore = require('connect-mongo');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user')
+const mongoSanitize = require('express-mongo-sanitize');
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/UniCSReview'
 
 const universityRoutes = require('./routes/universities');
 const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users');
 
-mongoose.connect('mongodb://localhost:27017/UniCSReview', {
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
 });
 
@@ -36,8 +45,14 @@ app.use(express.urlencoded({
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 
+const secret = process.env.SECRET || 'thisshouldbeabettersecret'
+
 const sessionConfig = {
-    secret: 'thisshouldbeabettersecret!',
+    store: MongoDbStore.create({
+        mongoUrl: dbUrl
+    }),
+    name: 'session',
+    secret: secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -55,7 +70,10 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(mongoSanitize());
+
 app.use((req,res, next) => {
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
@@ -69,10 +87,8 @@ app.get('/', (rep, res) => {
     res.render('home')
 })
 
-app.get('/fakeUser', async (req, res) => {
-    const user = new User({ email: '1085250220alex@gmail.com', username: 'colttt' })
-    const newUser = await User.register(user, 'chicken');
-    res.send(newUser);
+app.get('/UniCSReview', (rep, res) => {
+    res.render('UniCSReview')
 })
 
 app.use('/', userRoutes);
