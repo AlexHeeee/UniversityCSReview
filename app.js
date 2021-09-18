@@ -19,6 +19,7 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user')
 const mongoSanitize = require('express-mongo-sanitize');
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/UniCSReview'
+console.log(dbUrl);
 
 const universityRoutes = require('./routes/universities');
 const reviewRoutes = require('./routes/reviews');
