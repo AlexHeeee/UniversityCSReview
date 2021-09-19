@@ -22,7 +22,10 @@ router.get('/new', isLoggedIn, (req, res) => {
 router.post('/', isLoggedIn, upload.array('image'), async(req, res) => {
     const university = new UniCSReview(req.body.University);
     university.author = req.user._id;
-    university.images = req.files.map(f => ({url: f.path, filename: f.filename})) 
+    //if images were uploaded
+    if(req.files){
+    university.images = req.files.map(f => ({url: f.path, filename: f.filename}))
+    } 
     await university.save();
     req.flash('success', 'Successfully made a new university!'); 
     res.redirect(`/Universities/${university._id}`)

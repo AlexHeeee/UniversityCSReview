@@ -1,11 +1,17 @@
+//configuring cloudinary
+if(process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
 const mongoose = require('mongoose');
 const universities = require('./universities')
 const UniCSReview = require('../models/UniCSReview');
 
-mongoose.connect('mongodb://localhost:27017/UniCSReview', {
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/UniCSReview'
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
 });
 
+console.log(dbUrl)
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
@@ -17,7 +23,7 @@ const seedDB = async() => {
     for(let i = 0; i < 100; i++){
         //const random1000 = Math.floor(Math.random() *1000);
         const Uni = new UniCSReview({
-            author: '6141e5b19591f75e07c45bcd',
+            author: '6145bfbe12b2b8c38d3179cf',
             title: `${universities[i].title}`,
             location: `${universities[i].location}`,
             images: [ { "url" : "https://res.cloudinary.com/doqwnmsv5/image/upload/v1631860962/University/ontere2ge9mkgt8arisx.jpg", "filename" : "University/ontere2ge9mkgt8arisx"},
