@@ -7,9 +7,11 @@
         <% for (let University of Universities){%>
             <div class="card mb-3">
                 <div class="row">
+                    <% if(University.images.length) {%> 
                     <div class="col-md-4">
                         <img class="img-fluid" alt="" src="<%=University.images[0].url%>">
                     </div>
+                    <% } %> 
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title"> <%= University.title %></h5>
